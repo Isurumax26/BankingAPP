@@ -1,14 +1,19 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BankingApp {
 
     Map<String, Customer> customerIds = new HashMap<>(); // in-memory map
 
+    /*
+    * Assuming Transaction data looks as follows
+        id    date    debitAcctId creditAcctId    amount
+        ------------------------------------------------
+        1   2021-12-02     1           2              1000
+    *
+    * */
     public void setUp() {
         List<Transaction> transactions = getTransactionDetailsFromAPI();
+        transactions.sort(Comparator.comparing(Transaction::getDate)); // sorting by date
 
         for (Transaction transaction : transactions) {
             String debitCustomerId = transaction.getDebitCustomerId();

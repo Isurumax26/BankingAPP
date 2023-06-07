@@ -1,18 +1,26 @@
+package com.isuru.bank;
+
 import java.util.*;
 
 public class BankingApp {
 
+    BankingAppController bankingAppController;
     Map<String, Customer> customerIds = new HashMap<>(); // in-memory map
 
+    public BankingApp(BankingAppController bankingAppController) {
+        this.bankingAppController = bankingAppController;
+    }
+
+
     /*
-    * Assuming Transaction data looks as follows
+    * Assuming com.isuru.bank.Transaction data looks as follows
         id    date    debitAcctId creditAcctId    amount
         ------------------------------------------------
         1   2021-12-02     1           2              1000
     *
     * */
     public void setUp() {
-        List<Transaction> transactions = getTransactionDetailsFromAPI();
+        List<Transaction> transactions = bankingAppController.getTransactionDetailsFromAPI();
         transactions.sort(Comparator.comparing(Transaction::getDate)); // sorting by date
 
         for (Transaction transaction : transactions) {
@@ -32,9 +40,6 @@ public class BankingApp {
         }
     }
 
-    public List<Transaction> getTransactionDetailsFromAPI() {
-        return new ArrayList<>();
-    }
 
     public double getMonthlyBalance(String customerId, String month, String year) {
         Customer customer = customerIds.get(customerId);

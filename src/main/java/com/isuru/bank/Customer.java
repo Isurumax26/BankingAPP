@@ -1,3 +1,5 @@
+package com.isuru.bank;
+
 import java.util.HashMap;
 import java.util.Map;
 

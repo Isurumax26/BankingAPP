@@ -1,12 +1,14 @@
+package com.isuru.bank;
+
 public class Transaction {
 
     private String id;
     private String debitCustomerId;
     private String creditCustomerId;
     private String date;
-    private int amount;
+    private double amount;
 
-    public Transaction(String id, String debitCustomerId, String creditCustomerId, String date, int amount) {
+    public Transaction(String id, String debitCustomerId, String creditCustomerId, String date, double amount) {
         this.id = id;
         this.debitCustomerId = debitCustomerId;
         this.creditCustomerId = creditCustomerId;
@@ -46,7 +48,7 @@ public class Transaction {
         this.date = date;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 

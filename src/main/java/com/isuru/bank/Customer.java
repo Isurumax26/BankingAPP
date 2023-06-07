@@ -1,6 +1,8 @@
 package com.isuru.bank;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Customer {
@@ -8,6 +10,7 @@ public class Customer {
     private String id;
     private double currentAmount;
     private Map<String, Double> amountByDate;
+    private List<String> transferDates;
 
     public Customer(String id, double currentAmount) {
         this.id = id;
@@ -19,6 +22,7 @@ public class Customer {
         this.id  = id;
         currentAmount = 0;
         this.amountByDate = new HashMap<>();
+        this.transferDates = new ArrayList<>();
     }
 
     public String getId() {
@@ -47,6 +51,7 @@ public class Customer {
         else {
             currentAmount = currentAmount + amount;
         }
+        transferDates.add(date.substring(0, 7));
         amountByDate.put(date.substring(0, 7), currentAmount); // need to return monthly balance, so store only the month details, date format - 2023-05-15
     }
 
@@ -77,6 +82,24 @@ public class Customer {
     }
 
     public double getMonthlyBalance(String month) {
-        return amountByDate.get(month);
+        if (amountByDate.containsKey(month)) {
+            return amountByDate.get(month);
+        }
+        else {
+            if (transferDates.size() == 0 || month.compareTo(transferDates.get(0)) < 0) {
+                return 0;
+            }
+            else if (month.compareTo(transferDates.get(transferDates.size() - 1)) > 0) {
+                return currentAmount;
+            }
+            else {
+                for (int i = 0; i < transferDates.size(); i++) {
+                    if (month.compareTo(transferDates.get(i)) < 0) {
+                        return amountByDate.get(transferDates.get(i - 1));
+                    }
+                }
+            }
+        }
+        return 0;
     }
 }

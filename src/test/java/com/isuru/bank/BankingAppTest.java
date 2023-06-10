@@ -49,18 +49,33 @@ public class BankingAppTest {
     }
 
     @Test
-    void getMonthlyBalance_test_scenario_1() throws CustomerNotFoundException {
+    void getMonthlyBalance_test_scenario_01() throws CustomerNotFoundException {
         bankingApp.setUp();
         double value = bankingApp.getMonthlyBalance("1", "01", "2020");
         Assertions.assertEquals(300.00, value);
     }
 
     @Test
-    void getMonthlyBalance_test_scenario_2() throws CustomerNotFoundException {
+    void getMonthlyBalance_test_scenario_02() throws CustomerNotFoundException {
         bankingApp.setUp();
         double value = bankingApp.getMonthlyBalance("1", "03", "2020");
         Assertions.assertEquals(-1700.00, value);
     }
+
+    @Test
+    void getMonthlyBalance_test_scenario_03() throws CustomerNotFoundException {
+        bankingApp.setUp();
+        double value = bankingApp.getMonthlyBalance("1", "03", "2019");
+        Assertions.assertEquals(0.0, value);
+    }
+
+    @Test
+    void getMonthlyBalance_test_scenario_04() throws CustomerNotFoundException {
+        bankingApp.setUp();
+        double value = bankingApp.getMonthlyBalance("2", "03", "2023");
+        Assertions.assertEquals(2700.00, value);
+    }
+
 
     @Test
     void getCumulativeBalance_invalidCustomer_test() {

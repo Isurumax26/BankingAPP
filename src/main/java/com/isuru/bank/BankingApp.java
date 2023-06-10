@@ -1,14 +1,19 @@
 package com.isuru.bank;
 
 import com.isuru.bank.exceptions.CustomerNotFoundException;
+import org.apache.logging.log4j.*;
 
-import javax.swing.undo.CannotUndoException;
 import java.util.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+
 
 public class BankingApp {
 
     BankingAppController bankingAppController;
     Map<String, Customer> customerIds = new HashMap<>(); // in-memory map
+    public static final Logger log = LogManager.getLogger(BankingApp.class);
+
 
     public BankingApp(BankingAppController bankingAppController) {
         this.bankingAppController = bankingAppController;
@@ -23,6 +28,7 @@ public class BankingApp {
     *
     * */
     public void setUp() {
+        log.info("Setting up the application");
         List<Transaction> transactions = bankingAppController.getTransactionDetailsFromAPI();
         transactions.sort(Comparator.comparing(Transaction::getDate)); // sorting by date
 
@@ -32,14 +38,17 @@ public class BankingApp {
             double amount  = transaction.getAmount();
             String date = transaction.getDate();
 
-            Customer debitCustomer = customerIds.computeIfAbsent(debitCustomerId, Customer::new);
-            debitCustomer.setAmount(date, amount, true);
-            customerIds.put(debitCustomerId, debitCustomer); // do this by one line
+            if (debitCustomerId != null && !debitCustomerId.isEmpty()) {
+                Customer debitCustomer = customerIds.computeIfAbsent(debitCustomerId, Customer::new);
+                debitCustomer.setAmount(date, amount, true);
+                customerIds.put(debitCustomerId, debitCustomer);
+            }
 
-            Customer creditCustomer = customerIds.computeIfAbsent(creditCustomerId, Customer::new);
-            creditCustomer.setAmount(date, amount, false);
-            customerIds.put(creditCustomerId, creditCustomer);
-
+            if (creditCustomerId != null && !creditCustomerId.isEmpty()) {
+                Customer creditCustomer = customerIds.computeIfAbsent(creditCustomerId, Customer::new);
+                creditCustomer.setAmount(date, amount, false);
+                customerIds.put(creditCustomerId, creditCustomer);
+            }
         }
     }
 

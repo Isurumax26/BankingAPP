@@ -1,5 +1,7 @@
-package com.isuru.bank;
+package com.isuru.bank.tdd;
 
+import com.isuru.bank.BankingApp;
+import com.isuru.bank.BankingAppController;
 import com.isuru.bank.exceptions.CustomerNotFoundException;
 import com.isuru.bank.tranactions.Transaction;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +20,7 @@ import java.util.List;
 public class BankingAppTest {
 
     @Mock
-    private  BankingAppController bankingAppController;
+    private BankingAppController bankingAppController;
 
     private BankingApp bankingApp;
 

@@ -1,17 +1,17 @@
 package com.isuru.bank;
 
+import com.isuru.bank.customer.CustomerImpl;
 import com.isuru.bank.exceptions.CustomerNotFoundException;
+import com.isuru.bank.tranactions.Transaction;
 import org.apache.logging.log4j.*;
 
 import java.util.*;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
 
 
 public class BankingApp {
 
     BankingAppController bankingAppController;
-    Map<String, Customer> customerIds = new HashMap<>(); // in-memory map
+    Map<String, CustomerImpl> customerIds = new HashMap<>(); // in-memory map
     public static final Logger log = LogManager.getLogger(BankingApp.class);
 
 
@@ -39,13 +39,13 @@ public class BankingApp {
             String date = transaction.getDate();
 
             if (debitCustomerId != null && !debitCustomerId.isEmpty()) {
-                Customer debitCustomer = customerIds.computeIfAbsent(debitCustomerId, Customer::new);
+                CustomerImpl debitCustomer = customerIds.computeIfAbsent(debitCustomerId, CustomerImpl::new);
                 debitCustomer.setAmount(date, amount, true);
                 customerIds.put(debitCustomerId, debitCustomer);
             }
 
             if (creditCustomerId != null && !creditCustomerId.isEmpty()) {
-                Customer creditCustomer = customerIds.computeIfAbsent(creditCustomerId, Customer::new);
+                CustomerImpl creditCustomer = customerIds.computeIfAbsent(creditCustomerId, CustomerImpl::new);
                 creditCustomer.setAmount(date, amount, false);
                 customerIds.put(creditCustomerId, creditCustomer);
             }
@@ -54,13 +54,13 @@ public class BankingApp {
 
 
     public double getMonthlyBalance(String customerId, String month, String year) throws CustomerNotFoundException {
-        Customer customer = customerIds.get(customerId);
+        CustomerImpl customer = customerIds.get(customerId);
         if (customer == null) throw new CustomerNotFoundException("Not A Customer");
         return customer.getMonthlyBalance(year + "-" + month);
     }
 
     public double getCumulativeBalance(String customerId) throws CustomerNotFoundException {
-        Customer customer = customerIds.get(customerId);
+        CustomerImpl customer = customerIds.get(customerId);
         if (customer == null) throw new CustomerNotFoundException("Not A Customer");
         return customer.getCurrentAmount();
     }

@@ -1,4 +1,4 @@
-package com.isuru.bank;
+package com.isuru.bank.customer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,21 +8,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Customer {
+public class CustomerImpl implements Customer {
 
     private String id;
     private double currentAmount;
     private Map<String, Double> amountByDate;
     private List<String> transferDates;
-    public static final Logger log = LogManager.getLogger(Customer.class);
+    public static final Logger log = LogManager.getLogger(CustomerImpl.class);
 
-    public Customer(String id, double currentAmount) {
+    public CustomerImpl(String id, double currentAmount) {
         this.id = id;
         this.currentAmount = currentAmount;
         this.amountByDate = new HashMap<>();
     }
 
-    public Customer(String id) {
+    public CustomerImpl(String id) {
         this.id  = id;
         currentAmount = 0;
         this.amountByDate = new HashMap<>();

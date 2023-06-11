@@ -1,4 +1,4 @@
-package com.isuru.bank;
+package com.isuru.bank.tranactions;
 
 public class Transaction {
 

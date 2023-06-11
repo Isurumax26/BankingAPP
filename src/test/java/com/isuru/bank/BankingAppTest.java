@@ -1,6 +1,7 @@
 package com.isuru.bank;
 
 import com.isuru.bank.exceptions.CustomerNotFoundException;
+import com.isuru.bank.tranactions.Transaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

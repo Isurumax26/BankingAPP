@@ -46,7 +46,7 @@ public class CustomerImpl implements Customer {
     }
 
     /*
-    *  assuming transaction details are ordered by the date
+    *  calculate the cumulative balance and monthly balance
     * */
     public void setAmount(String date, double amount, boolean isDebit) {
         log.info("calculating the cumulative and monthly balance");
@@ -73,14 +73,30 @@ public class CustomerImpl implements Customer {
                 return currentAmount;
             }
             else {
-                for (int i = 0; i < transferDates.size(); i++) {
-                    if (month.compareTo(transferDates.get(i)) < 0) {
-                        return amountByDate.get(transferDates.get(i - 1));
-                    }
-                }
+                int index  = getClosestTransactionDate(month);
+                return amountByDate.get(transferDates.get(index));
             }
         }
-        return 0;
+    }
+
+    /*
+    * doing binary search to find the closest transaction month for the given date
+    * */
+    public int getClosestTransactionDate(String month) {
+
+        int left  = 0;
+        int right = transferDates.size() - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (transferDates.get(mid).compareTo(month) > 0) {
+                right  = mid - 1;
+            }
+            else if (transferDates.get(mid).compareTo(month) < 0) {
+                left  = mid + 1;
+            }
+        }
+        return right;
     }
 
     /*
@@ -88,6 +104,7 @@ public class CustomerImpl implements Customer {
      * We can't use currentAMount
      *
      * Currently this method is not used for the logic
+     * we sort the data by date
      * */
     public void setAmount_1(String date, double amount, boolean isDebit) {
         double balance = amountByDate.getOrDefault(date.substring(0, 7), 0.0);
@@ -102,7 +119,9 @@ public class CustomerImpl implements Customer {
 
     /*
      * If transaction details are not ordered by date
+     *
      * Currently this method is not used for the logic
+     * we sort the data by date
      * */
     public double getCumulativeBalance() {
         double amount  = 0;

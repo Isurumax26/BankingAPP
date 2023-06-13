@@ -49,7 +49,7 @@ public class Stepdefs {
         Transaction transaction_10 = new Transaction("10", "4", "5", "2022-03-25", 1000.00);
 
 
-        List<Transaction> transactions = Arrays.asList(transaction_1, transaction_2, transaction_3, transaction_4); //try List.of()
+        List<Transaction> transactions = Arrays.asList(transaction_1, transaction_2, transaction_3, transaction_4);
 
         when(bankingAppController.getTransactionDetailsFromAPI()).thenReturn(transactions);
         bankingApp = new BankingApp(bankingAppController);

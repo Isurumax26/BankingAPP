@@ -25,7 +25,7 @@ public class Stepdefs {
     private BankingAppController bankingAppController;
 
     private BankingApp bankingApp;
-    private double cumulativeBalance;
+    private double value;
 
 
     @Before
@@ -59,11 +59,18 @@ public class Stepdefs {
     @When("Customer {string} request cumulative balance")
     public void customer_request_balance(String id) throws CustomerNotFoundException {
         bankingApp.setUp();
-        cumulativeBalance = bankingApp.getCumulativeBalance("2");
+        value = bankingApp.getCumulativeBalance(id);
+    }
+
+    @When("Customer {string} request monthly balance on {string}")
+    public void customer_request_balance(String id, String date) throws CustomerNotFoundException {
+        bankingApp.setUp();
+        String[] monthYear = date.split("-");
+        value = bankingApp.getMonthlyBalance(id, monthYear[1], monthYear[0]);
     }
 
     @Then("Application should return {double}")
     public void app_should_return(double expectedValue) {
-        Assertions.assertEquals(expectedValue, cumulativeBalance);
+        Assertions.assertEquals(expectedValue, value);
     }
 }

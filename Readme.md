@@ -13,8 +13,12 @@ practices for developing the application and have written test cases following b
   * Maven
   * Junit
   * Cucumber
+<br/>
+Folllwoing is the program flow to calculate the monthly balance </br>
+
 
 
 
 
  
+![getting Balance](https://github.com/Isurumax26/BankingApp/assets/36339550/931c58f1-741f-4ab3-a53e-3fff438ffc20)

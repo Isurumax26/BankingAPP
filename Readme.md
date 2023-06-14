@@ -9,7 +9,7 @@ methodologies and wrote test cases using both approaches, resulting in code cove
 
 **Technolgies Used** <br/>
   * Java 8
-  * GIT
+  * Git
   * GitHub
   * Maven
   * Junit
